@@ -1,0 +1,6 @@
+@TaleWorld_bk_HostAddress = http://localhost:5123
+
+GET {{TaleWorld_bk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
