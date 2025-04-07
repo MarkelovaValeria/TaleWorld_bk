@@ -3,7 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleWorld_bk", "TaleWorld_bk\TaleWorld_bk.csproj", "{81972031-594B-4D54-A437-706406CE5B1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleWorld_bk", "TaleWorld_bk\TaleWorld_bk.csproj", "{81972031-594B-4D54-A437-706406CE5B1C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4802D70-5949-4298-A936-5D3B0D1A8CC9} = {A4802D70-5949-4298-A936-5D3B0D1A8CC9}
+		{AC72EF7E-4784-4BF0-9DBD-FA097C385A69} = {AC72EF7E-4784-4BF0-9DBD-FA097C385A69}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Persistance\Persistance.csproj", "{01410FCE-2E29-4003-A125-F9522F6B6973}"
+	ProjectSection(ProjectDependencies) = postProject
+		{022F4B9B-881D-4DE2-8EB3-442816541577} = {022F4B9B-881D-4DE2-8EB3-442816541577}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{A4802D70-5949-4298-A936-5D3B0D1A8CC9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{022F4B9B-881D-4DE2-8EB3-442816541577} = {022F4B9B-881D-4DE2-8EB3-442816541577}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{022F4B9B-881D-4DE2-8EB3-442816541577}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{AC72EF7E-4784-4BF0-9DBD-FA097C385A69}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01410FCE-2E29-4003-A125-F9522F6B6973} = {01410FCE-2E29-4003-A125-F9522F6B6973}
+		{022F4B9B-881D-4DE2-8EB3-442816541577} = {022F4B9B-881D-4DE2-8EB3-442816541577}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1779EA2A-E2F7-478A-B0C3-44BE03BD5ACE}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +42,22 @@ Global
 		{81972031-594B-4D54-A437-706406CE5B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81972031-594B-4D54-A437-706406CE5B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81972031-594B-4D54-A437-706406CE5B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01410FCE-2E29-4003-A125-F9522F6B6973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01410FCE-2E29-4003-A125-F9522F6B6973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01410FCE-2E29-4003-A125-F9522F6B6973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01410FCE-2E29-4003-A125-F9522F6B6973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4802D70-5949-4298-A936-5D3B0D1A8CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4802D70-5949-4298-A936-5D3B0D1A8CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4802D70-5949-4298-A936-5D3B0D1A8CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4802D70-5949-4298-A936-5D3B0D1A8CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{022F4B9B-881D-4DE2-8EB3-442816541577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{022F4B9B-881D-4DE2-8EB3-442816541577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{022F4B9B-881D-4DE2-8EB3-442816541577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{022F4B9B-881D-4DE2-8EB3-442816541577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC72EF7E-4784-4BF0-9DBD-FA097C385A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC72EF7E-4784-4BF0-9DBD-FA097C385A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC72EF7E-4784-4BF0-9DBD-FA097C385A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC72EF7E-4784-4BF0-9DBD-FA097C385A69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
