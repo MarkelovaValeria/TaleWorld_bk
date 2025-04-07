@@ -24,6 +24,21 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _context.Users
+        .AsNoTracking()
+        .FirstOrDefaultAsync(user => user.Email == email);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("Користувач з такою електронною адресою не знайдений.");
+            }
+            Console.WriteLine(user.Email);
+
+            return user;
+        }
+
         public async Task<User> GetUserByUsernameAsync(string fullname)
         {
             return await _context.Users

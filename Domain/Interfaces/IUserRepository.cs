@@ -11,6 +11,7 @@ namespace Infrastructure.Repositories
     {
         Task<User> GetUserByUsernameAsync(string fullname);
         Task AddUserAsync(User user);
+        Task<User> GetUserByEmail(string email);
         Task SaveChangesAsync();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,14 @@ namespace TaleWorld_bk.Controllers
             }
 
             return Ok("Користувач успішно зареєстрований.");
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginCommand command)
+        {
+            var token = await _mediator.Send(command);
+            HttpContext.Response.Cookies.Append("tasty-cookies", token);
+            return Ok(token);
         }
     }
 }
