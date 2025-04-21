@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    [Migration("20250407101914_taleworld-register")]
-    partial class taleworldregister
+    [Migration("20250419193259_taleworld")]
+    partial class taleworld
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,14 +135,18 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("OptionText")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
-                    b.Property<int>("TaskLocationId")
+                    b.Property<int>("TaskQuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TaskQuestionsId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskLocationId");
+                    b.HasIndex("TaskQuestionsId");
 
                     b.ToTable("TaskOptions");
                 });
@@ -169,7 +173,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("TaskSubType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TasksLocation", b =>
+            modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,7 +183,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Question")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<int>("SubTypeId")
                         .HasColumnType("integer");
@@ -193,7 +198,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("TasksLocations");
+                    b.ToTable("TasksQuestions");
                 });
 
             modelBuilder.Entity("Domain.Entities.TypeTasks", b =>
@@ -308,13 +313,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.TaskOptions", b =>
                 {
-                    b.HasOne("Domain.Entities.TasksLocation", "TaskLocation")
+                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
                         .WithMany("TaskOptions")
-                        .HasForeignKey("TaskLocationId")
+                        .HasForeignKey("TaskQuestionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TaskLocation");
+                    b.Navigation("TaskQuestions");
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskSubType", b =>
@@ -328,7 +333,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TasksLocation", b =>
+            modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
                     b.HasOne("Domain.Entities.TaskSubType", "SubType")
                         .WithMany("TaskLocations")
@@ -357,7 +362,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("TaskLocations");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TasksLocation", b =>
+            modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
                     b.Navigation("TaskOptions");
                 });

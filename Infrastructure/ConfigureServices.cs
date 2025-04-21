@@ -27,6 +27,11 @@ namespace Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPassWordHasher, PasswordHasher>();
             services.AddTransient<IJwtProvider, JwtProvider>();
+            services.AddTransient<ITasksRepository, TasksRepository>();
+            services.AddTransient<IMapRepository, MapRepository>();
+            services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<ILessonRepository, LessonRepository>();
+            services.AddTransient<ILocationRepository, LocationRepository>();
 
             return services;
         }

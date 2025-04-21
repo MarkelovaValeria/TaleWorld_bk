@@ -24,10 +24,10 @@ namespace TaleWorld_bk.Controllers
 
             if (!result)
             {
-                return BadRequest("Користувач вже існує або дані некоректні.");
+                return BadRequest(new { message = $"Користувач {command.Name} {command.Surname} вже існує!" });
             }
 
-            return Ok("Користувач успішно зареєстрований.");
+            return Ok(new { message = $"Користувач {command.Name} {command.Surname} зареєстрований успішно!" });
         }
 
         [HttpPost("login")]
@@ -35,7 +35,7 @@ namespace TaleWorld_bk.Controllers
         {
             var token = await _mediator.Send(command);
             HttpContext.Response.Cookies.Append("tasty-cookies", token);
-            return Ok(token);
+            return Ok(new { message = $"{token}"});
         }
     }
 }

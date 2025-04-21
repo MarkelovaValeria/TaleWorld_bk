@@ -16,29 +16,29 @@ namespace Persistance.Seeding
             new TaskOptions
             {
                 Id = 1,
-                TaskLocationId = 1,
-                OptionText = "",
+                TaskQuestionsId = 1,
+                OptionText = "going",
                 IsCorrect = true
             },
             new TaskOptions
             {
                 Id = 2,
-                TaskLocationId = 1,
-                OptionText = "",
+                TaskQuestionsId = 1,
+                OptionText = "goes",
                 IsCorrect = false
             },
             new TaskOptions
             {
                 Id = 3,
-                TaskLocationId = 1,
-                OptionText = "",
+                TaskQuestionsId = 1,
+                OptionText = "gone",
                 IsCorrect = false
             },
             new TaskOptions
             {
                 Id = 4,
-                TaskLocationId = 1,
-                OptionText = "",
+                TaskQuestionsId = 1,
+                OptionText = "go",
                 IsCorrect = false
             },
         };

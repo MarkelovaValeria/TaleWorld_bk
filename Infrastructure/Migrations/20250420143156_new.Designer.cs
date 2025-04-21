@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    partial class TWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250420143156_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +40,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("MapId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TaskQuestionId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("TaskQuestionsId")
                         .HasColumnType("integer");
 
@@ -49,19 +55,9 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MapId");
 
-                    b.HasIndex("TaskQuestionsId");
+                    b.HasIndex("TaskQuestionId");
 
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Background = "new",
-                            MapId = 1,
-                            TaskQuestionsId = 1,
-                            Text = "text"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
@@ -425,15 +421,15 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
+                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestion")
                         .WithMany("Locations")
-                        .HasForeignKey("TaskQuestionsId")
+                        .HasForeignKey("TaskQuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Map");
 
-                    b.Navigation("TaskQuestions");
+                    b.Navigation("TaskQuestion");
                 });
 
             modelBuilder.Entity("Domain.Entities.Course", b =>

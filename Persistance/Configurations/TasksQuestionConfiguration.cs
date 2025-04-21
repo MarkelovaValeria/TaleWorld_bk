@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Persistance.Configurations
 {
-    public class TasksLocationConfiguration : IEntityTypeConfiguration<TasksLocation>
+    public class TasksQuestionConfiguration : IEntityTypeConfiguration<TasksQuestions>
     {
-        public void Configure(EntityTypeBuilder<TasksLocation> builder)
+        public void Configure(EntityTypeBuilder<TasksQuestions> builder)
         {
             builder.HasKey(task => task.Id);
 
@@ -20,7 +20,7 @@ namespace Persistance.Configurations
             builder.Property(task => task.SubTypeId).IsRequired();
             builder.Property(task => task.Question).IsRequired().HasMaxLength(250);
 
-            new TaskSeeder().Seed(builder);
+            new TasksQuestionsSeeder().Seed(builder);
         }
     }
 }

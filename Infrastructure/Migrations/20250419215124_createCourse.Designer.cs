@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    partial class TWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250419215124_createCourse")]
+    partial class createCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +34,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Background")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<int>("MapId")
                         .HasColumnType("integer");
@@ -42,26 +44,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MapId");
-
-                    b.HasIndex("TaskQuestionsId");
-
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Background = "new",
-                            MapId = 1,
-                            TaskQuestionsId = 1,
-                            Text = "text"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
@@ -139,7 +126,6 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CourseId")
-                        .HasMaxLength(50)
                         .HasColumnType("integer");
 
                     b.Property<int>("MapId")
@@ -147,8 +133,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -157,15 +142,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("MapId");
 
                     b.ToTable("Lessons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 1,
-                            MapId = 1,
-                            Title = ""
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskOptions", b =>
@@ -417,25 +393,6 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Location", b =>
-                {
-                    b.HasOne("Domain.Entities.Admin.Map.Map", "Map")
-                        .WithMany("Locations")
-                        .HasForeignKey("MapId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
-                        .WithMany("Locations")
-                        .HasForeignKey("TaskQuestionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Map");
-
-                    b.Navigation("TaskQuestions");
-                });
-
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Teacher")
@@ -507,11 +464,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
-                {
-                    b.Navigation("Locations");
-                });
-
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.Navigation("Lessons");
@@ -524,8 +476,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
-                    b.Navigation("Locations");
-
                     b.Navigation("TaskOptions");
                 });
 

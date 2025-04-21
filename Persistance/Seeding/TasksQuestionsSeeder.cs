@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Persistance.Seeding
 {
-    public class TaskSeeder : ISeeder<TasksLocation>
+    public class TasksQuestionsSeeder : ISeeder<TasksQuestions>
     {
-        private static readonly List<TasksLocation> tasks = new()
+        private static readonly List<TasksQuestions> tasks = new()
         {
-            new TasksLocation
+            new TasksQuestions
             {
                 Id = 1,
-                SubTypeId = 1,
                 TypeId = 1,
-                Question = "Знайди правильне речення"
+                SubTypeId = 2,
+                Question = "Choose the correct form: He ___ to the gym every day."
             }
         };
 
-        public void Seed(EntityTypeBuilder<TasksLocation> builder) => builder.HasData(tasks);
+        public void Seed(EntityTypeBuilder<TasksQuestions> builder) => builder.HasData(tasks);
     }
 }

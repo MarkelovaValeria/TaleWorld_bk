@@ -13,6 +13,6 @@ namespace Domain.Entities
         public string SubType { get; set; }
 
         public TypeTasks Type { get; set; }
-        public List<TasksLocation> TaskLocations { get; set; } = new();
+        public List<TasksQuestions> TaskLocations { get; set; } = new();
     }
 }

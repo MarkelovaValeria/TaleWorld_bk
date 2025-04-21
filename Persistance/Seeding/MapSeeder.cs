@@ -17,9 +17,9 @@ namespace Persistance.Seeding
             new Map
             {
                 Id = 1,
-                BackgroundTitle = "",
-                Description = "",
-                Name = "",
+                BackgroundTitle = "шлях",
+                Description = "опис світу",
+                Name = "TaleWorld",
             }
         };
 

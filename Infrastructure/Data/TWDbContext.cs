@@ -22,14 +22,20 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-
-
+            modelBuilder.ApplyConfiguration(new TypeTasksConfiguration());
+            modelBuilder.ApplyConfiguration(new TasksQuestionConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskOptionConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskSubTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MapConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseConfiguration());
+            modelBuilder.ApplyConfiguration(new LessonsConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<TypeTasks> TypeTasks { get; set; }
         public DbSet<TaskSubType> TaskSubType { get; set; }
-        public DbSet<TasksLocation> TasksLocations { get; set; }
+        public DbSet<TasksQuestions> TasksQuestions { get; set; }
         public DbSet<TaskOptions> TaskOptions { get; set; }
         public DbSet<Lessons> Lessons { get; set; }
         public DbSet<Course> courses { get; set; }

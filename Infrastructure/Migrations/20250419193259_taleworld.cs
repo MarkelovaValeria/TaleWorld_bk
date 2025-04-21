@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class createdb : Migration
+    public partial class taleworld : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -116,26 +116,26 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TasksLocations",
+                name: "TasksQuestions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SubTypeId = table.Column<int>(type: "integer", nullable: false),
                     TypeId = table.Column<int>(type: "integer", nullable: false),
-                    Question = table.Column<string>(type: "text", nullable: false)
+                    Question = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TasksLocations", x => x.Id);
+                    table.PrimaryKey("PK_TasksQuestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TasksLocations_TaskSubType_SubTypeId",
+                        name: "FK_TasksQuestions_TaskSubType_SubTypeId",
                         column: x => x.SubTypeId,
                         principalTable: "TaskSubType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TasksLocations_TypeTasks_TypeId",
+                        name: "FK_TasksQuestions_TypeTasks_TypeId",
                         column: x => x.TypeId,
                         principalTable: "TypeTasks",
                         principalColumn: "Id",
@@ -175,17 +175,18 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TaskLocationId = table.Column<int>(type: "integer", nullable: false),
-                    OptionText = table.Column<string>(type: "text", nullable: false),
-                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false)
+                    TaskQuestionId = table.Column<int>(type: "integer", nullable: false),
+                    OptionText = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false),
+                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TaskOptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TaskOptions_TasksLocations_TaskLocationId",
-                        column: x => x.TaskLocationId,
-                        principalTable: "TasksLocations",
+                        name: "FK_TaskOptions_TasksQuestions_TaskQuestionsId",
+                        column: x => x.TaskQuestionsId,
+                        principalTable: "TasksQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -215,18 +216,18 @@ namespace Infrastructure.Migrations
                 column: "MapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskOptions_TaskLocationId",
+                name: "IX_TaskOptions_TaskQuestionsId",
                 table: "TaskOptions",
-                column: "TaskLocationId");
+                column: "TaskQuestionsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TasksLocations_SubTypeId",
-                table: "TasksLocations",
+                name: "IX_TasksQuestions_SubTypeId",
+                table: "TasksQuestions",
                 column: "SubTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TasksLocations_TypeId",
-                table: "TasksLocations",
+                name: "IX_TasksQuestions_TypeId",
+                table: "TasksQuestions",
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
@@ -254,7 +255,7 @@ namespace Infrastructure.Migrations
                 name: "courses");
 
             migrationBuilder.DropTable(
-                name: "TasksLocations");
+                name: "TasksQuestions");
 
             migrationBuilder.DropTable(
                 name: "Users");

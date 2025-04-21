@@ -1,21 +1,17 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities.Admin.Map
+namespace Application.Locations.Commands.Create
 {
-    public class Location
+    public class CreateLocationCommand : IRequest<bool>
     {
-        public int Id { get; set; }
         public string Background { get; set; }
         public string Text { get; set; }
-        public int MapId  { get; set; }
-        public Map Map { get; set; }
+        public int MapId { get; set; }
         public int TaskQuestionsId { get; set; }
-        public TasksQuestions TaskQuestions { get; set; }
-
-
     }
 }

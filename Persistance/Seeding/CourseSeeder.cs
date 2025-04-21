@@ -16,7 +16,7 @@ namespace Persistance.Seeding
             {
                 Id = 1,
                 TeacherId = 1,
-                Title = ""
+                Title = "Подорожі"
             }
         };
 

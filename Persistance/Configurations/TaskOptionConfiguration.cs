@@ -18,7 +18,7 @@ namespace Persistance.Configurations
 
             builder.Property(option => option.OptionText).IsRequired().HasMaxLength(100);
             builder.Property(option => option.IsCorrect).IsRequired();
-            builder.Property(option => option.TaskLocationId).IsRequired();
+            builder.Property(option => option.TaskQuestionsId).IsRequired();
 
             new TaskOptionSeeder().Seed(builder);
 

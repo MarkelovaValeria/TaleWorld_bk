@@ -18,8 +18,9 @@ namespace Persistance.Seeding
             {
                 Id = 1,
                 MapId = 1,
-                Background = "",
-                Text = ""
+                TaskQuestionsId = 1,
+                Background = "new",
+                Text = "text"
             }
         };
 

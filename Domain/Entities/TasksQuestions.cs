@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Admin.Map;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class TasksLocation
+    public class TasksQuestions
     {
         public int Id { get; set; }
         public int SubTypeId { get; set; }
@@ -16,5 +17,6 @@ namespace Domain.Entities
         public TaskSubType SubType { get; set; }
         public TypeTasks Type { get; set; }
         public List<TaskOptions> TaskOptions { get; set; } = new();
+        public List<Location> Locations { get; set; } = new();
     }
 }

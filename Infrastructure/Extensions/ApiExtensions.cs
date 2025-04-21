@@ -30,6 +30,16 @@ namespace Infrastructure.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.SecretKey))
                     };
 
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            context.Token = context.Request.Cookies["tasty-cookies"];
+
+                            return Task.CompletedTask;
+                        }
+                    };
+
                 });
 
             services.AddAuthorization();

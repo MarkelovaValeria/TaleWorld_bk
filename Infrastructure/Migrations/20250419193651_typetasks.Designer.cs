@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    partial class TWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250419193651_typetasks")]
+    partial class typetasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,37 +34,18 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Background")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<int>("MapId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TaskQuestionsId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MapId");
-
-                    b.HasIndex("TaskQuestionsId");
-
                     b.ToTable("Locations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Background = "new",
-                            MapId = 1,
-                            TaskQuestionsId = 1,
-                            Text = "text"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
@@ -74,29 +58,19 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BackgroundTitle")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Maps");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BackgroundTitle = "шлях",
-                            Description = "опис світу",
-                            Name = "TaleWorld"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Course", b =>
@@ -112,22 +86,13 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TeacherId");
 
                     b.ToTable("courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            TeacherId = 1,
-                            Title = "Подорожі"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Lessons", b =>
@@ -139,7 +104,6 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CourseId")
-                        .HasMaxLength(50)
                         .HasColumnType("integer");
 
                     b.Property<int>("MapId")
@@ -147,8 +111,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -157,15 +120,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("MapId");
 
                     b.ToTable("Lessons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 1,
-                            MapId = 1,
-                            Title = ""
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskOptions", b =>
@@ -181,8 +135,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("OptionText")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
+
+                    b.Property<int>("TaskQuestionId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("TaskQuestionsId")
                         .HasColumnType("integer");
@@ -192,36 +148,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("TaskQuestionsId");
 
                     b.ToTable("TaskOptions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsCorrect = true,
-                            OptionText = "going",
-                            TaskQuestionsId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsCorrect = false,
-                            OptionText = "goes",
-                            TaskQuestionsId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsCorrect = false,
-                            OptionText = "gone",
-                            TaskQuestionsId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsCorrect = false,
-                            OptionText = "go",
-                            TaskQuestionsId = 1
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskSubType", b =>
@@ -283,8 +209,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Question")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<int>("SubTypeId")
                         .HasColumnType("integer");
@@ -299,15 +224,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("TypeId");
 
                     b.ToTable("TasksQuestions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Question = "Choose the correct form: He ___ to the gym every day.",
-                            SubTypeId = 2,
-                            TypeId = 1
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.TypeTasks", b =>
@@ -417,25 +333,6 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Location", b =>
-                {
-                    b.HasOne("Domain.Entities.Admin.Map.Map", "Map")
-                        .WithMany("Locations")
-                        .HasForeignKey("MapId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
-                        .WithMany("Locations")
-                        .HasForeignKey("TaskQuestionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Map");
-
-                    b.Navigation("TaskQuestions");
-                });
-
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Teacher")
@@ -507,11 +404,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
-                {
-                    b.Navigation("Locations");
-                });
-
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.Navigation("Lessons");
@@ -524,8 +416,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
-                    b.Navigation("Locations");
-
                     b.Navigation("TaskOptions");
                 });
 
