@@ -12,7 +12,10 @@ namespace Domain.Entities
         public string Title { get; set; }
         public int TeacherId { get; set; }
 
+        public string? CoursePhoto { get; set; }
+
         public User Teacher { get; set; }
         public List<Lessons> Lessons { get; set; } = new();
+        public List<StudentCourse> StudentCourses { get; set; } = new();
     }
 }

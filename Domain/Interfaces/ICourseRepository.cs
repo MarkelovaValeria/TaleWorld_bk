@@ -11,5 +11,9 @@ namespace Domain.Interfaces
     public interface ICourseRepository
     {
         Task AddCourse(Course course);
+        Task<List<Course>> GetAllCoursesAsync();
+        Task<Course> GetCourseByIdAsync(int courseId);
+        Task<Course> GetCourseByTitleAsync(string title);
+        Task<Course> GetCourseByTeacherIdAsync(int teacherId);
     }
 }

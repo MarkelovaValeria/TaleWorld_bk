@@ -107,6 +107,9 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CoursePhoto")
+                        .HasColumnType("text");
+
                     b.Property<int>("TeacherId")
                         .HasColumnType("integer");
 
@@ -166,6 +169,29 @@ namespace Infrastructure.Migrations
                             MapId = 1,
                             Title = ""
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.StudentCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskOptions", b =>
@@ -376,6 +402,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
+                    b.Property<string>("Photo")
+                        .HasColumnType("text");
+
                     b.Property<string>("RefreshToken")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -466,6 +495,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Map");
                 });
 
+            modelBuilder.Entity("Domain.Entities.StudentCourse", b =>
+                {
+                    b.HasOne("Domain.Entities.Course", "Course")
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "Student")
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Domain.Entities.TaskOptions", b =>
                 {
                     b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
@@ -515,6 +563,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
                     b.Navigation("Lessons");
+
+                    b.Navigation("StudentCourses");
                 });
 
             modelBuilder.Entity("Domain.Entities.TaskSubType", b =>
@@ -537,6 +587,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("StudentCourses");
                 });
 #pragma warning restore 612, 618
         }

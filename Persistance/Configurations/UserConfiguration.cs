@@ -23,6 +23,7 @@ namespace Persistance.Configurations
             builder.Property(user => user.Email).IsRequired().HasMaxLength(150);
             builder.Property(user => user.Role).IsRequired();
             builder.Property(user => user.TeachingLanguage).IsRequired(false);
+            builder.Property(user => user.Photo).IsRequired(false);
 
             new UserSeeder().Seed(builder);
 

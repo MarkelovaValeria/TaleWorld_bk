@@ -1,5 +1,4 @@
-﻿using Application.Course.Commands.Create;
-using Application.Lesson.Commands.Create;
+﻿using Application.Lesson.Commands.Create;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

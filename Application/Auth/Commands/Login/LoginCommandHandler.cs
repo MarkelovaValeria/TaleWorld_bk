@@ -24,7 +24,8 @@ namespace Application.Auth.Commands.Login
 
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByEmail(request.Email);
+            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+
             var result = _passwordHasher.Verify(request.Password, user.PasswordHash);
             if (result == false)
             {

@@ -20,7 +20,7 @@ namespace Infrastructure.Services
         public string GenerateToken(User user)
         {
             Console.WriteLine(user.Email);
-            Claim[] claims = [new("userId", user.Id.ToString())];
+            Claim[] claims = [new("userId", user.Id.ToString()), new("userEmail", user.Email.ToString()), new("role", user.Role.ToString())];
 
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
@@ -29,7 +29,7 @@ namespace Infrastructure.Services
             var token = new JwtSecurityToken(
                 claims: claims,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddHours(_options.ExpitesHours)
+                expires: DateTime.UtcNow.AddHours(_options.ExpiresHours)
                 );
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);

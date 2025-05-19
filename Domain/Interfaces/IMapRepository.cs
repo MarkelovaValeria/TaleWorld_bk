@@ -11,5 +11,7 @@ namespace Domain.Interfaces
     public interface IMapRepository
     {
         Task AddMap(Map map);
+        Task<List<Map>> GetAllMaps();
+        Task<Map> GetMapById(int mapId);
     }
 }

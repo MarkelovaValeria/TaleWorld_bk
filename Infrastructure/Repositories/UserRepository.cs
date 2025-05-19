@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Courses.Queries.GetCoursesById;
+using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,7 +25,16 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetTeacherByCourseIdAsync(int courseId)
+        {
+            var course = await _context.courses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(course => course.Id == courseId);
+
+            return await _context.Users.FirstOrDefaultAsync(user => user.Id == course.TeacherId);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
         {
             var user = await _context.Users
         .AsNoTracking()
@@ -32,22 +42,27 @@ namespace Infrastructure.Repositories
 
             if (user == null)
             {
-                throw new InvalidOperationException("Користувач з такою електронною адресою не знайдений.");
+                return null;
             }
             Console.WriteLine(user.Email);
 
             return user;
         }
 
-        public async Task<User> GetUserByUsernameAsync(string fullname)
+        public async Task<User> GetUserByFullNameAsync(string name, string surname)
+        {
+            return await _context.Users.FirstOrDefaultAsync(user => user.Name == name && user.Surname == surname);
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+        }
+
+        /*public async Task<User> GetUserByUsernameAsync(string fullname)
         {
             return await _context.Users
                 .FirstOrDefaultAsync(user => user.Name == fullname || user.Surname == fullname);
-        }
-
-        public Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        }*/
     }
 }

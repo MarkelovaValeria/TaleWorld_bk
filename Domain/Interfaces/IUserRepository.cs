@@ -9,9 +9,10 @@ namespace Infrastructure.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetUserByUsernameAsync(string fullname);
+        Task<User> GetUserByFullNameAsync(string name, string surname);
         Task AddUserAsync(User user);
-        Task<User> GetUserByEmail(string email);
-        Task SaveChangesAsync();
+        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByIdAsync(int id);
+        Task<User> GetTeacherByCourseIdAsync(int courseId);
     }
 }

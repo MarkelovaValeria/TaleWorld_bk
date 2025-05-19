@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Course.Commands.Create
+namespace Application.Courses.Commands.Create
 {
     public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, bool>
     {
@@ -24,6 +24,7 @@ namespace Application.Course.Commands.Create
             {
                 Title = request.Title,
                 TeacherId = request.TeacherId,
+                CoursePhoto = request.Photo,
             };
             await _course.AddCourse(courses);
             return true;

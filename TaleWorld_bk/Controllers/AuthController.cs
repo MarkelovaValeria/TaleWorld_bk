@@ -24,7 +24,7 @@ namespace TaleWorld_bk.Controllers
 
             if (!result)
             {
-                return BadRequest(new { message = $"Користувач {command.Name} {command.Surname} вже існує!" });
+                return BadRequest(new { message = $"Ви вже зареєстровані!" });
             }
 
             return Ok(new { message = $"Користувач {command.Name} {command.Surname} зареєстрований успішно!" });

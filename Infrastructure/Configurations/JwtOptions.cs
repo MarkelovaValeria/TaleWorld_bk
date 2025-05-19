@@ -9,6 +9,6 @@ namespace Infrastructure.Configurations
     public class JwtOptions
     {
         public string SecretKey { get; set; } = string.Empty;
-        public int ExpitesHours { get; set; }
+        public int ExpiresHours { get; set; }
     }
 }

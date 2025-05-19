@@ -25,7 +25,7 @@ namespace Application.Auth.Commands.Register
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
 
-            var existingUser = await _userRepository.GetUserByEmail(request.Email);
+            var existingUser = await _userRepository.GetUserByEmailAsync(request.Email);
             if (existingUser != null)
                 return false;
 
