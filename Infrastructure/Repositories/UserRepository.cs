@@ -58,11 +58,5 @@ namespace Infrastructure.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
         }
-
-        /*public async Task<User> GetUserByUsernameAsync(string fullname)
-        {
-            return await _context.Users
-                .FirstOrDefaultAsync(user => user.Name == fullname || user.Surname == fullname);
-        }*/
     }
 }
