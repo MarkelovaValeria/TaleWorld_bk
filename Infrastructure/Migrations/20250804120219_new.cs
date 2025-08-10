@@ -8,35 +8,20 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class taleworld : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Background = table.Column<string>(type: "text", nullable: false),
-                    Text = table.Column<string>(type: "text", nullable: false),
-                    MapId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Maps",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    BackgroundTitle = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: true),
+                    BackgroundTitle = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +53,8 @@ namespace Infrastructure.Migrations
                     RefreshToken = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    TeachingLanguage = table.Column<string>(type: "text", nullable: true)
+                    TeachingLanguage = table.Column<string>(type: "text", nullable: true),
+                    Photo = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,7 +68,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TypeId = table.Column<int>(type: "integer", nullable: false),
-                    SubType = table.Column<string>(type: "text", nullable: false)
+                    SubType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,8 +87,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    TeacherId = table.Column<int>(type: "integer", nullable: false)
+                    Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    TeacherId = table.Column<int>(type: "integer", nullable: false),
+                    CoursePhoto = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -148,8 +135,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    CourseId = table.Column<int>(type: "integer", nullable: false),
+                    Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CourseId = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
                     MapId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -170,15 +157,68 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudentCourses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StudentId = table.Column<int>(type: "integer", nullable: false),
+                    CourseId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentCourses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentCourses_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentCourses_courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Background = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    Text = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    MapId = table.Column<int>(type: "integer", nullable: false),
+                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_Maps_MapId",
+                        column: x => x.MapId,
+                        principalTable: "Maps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Locations_TasksQuestions_TaskQuestionsId",
+                        column: x => x.TaskQuestionsId,
+                        principalTable: "TasksQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TaskOptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TaskQuestionId = table.Column<int>(type: "integer", nullable: false),
+                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false),
                     OptionText = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false),
-                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false)
+                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,12 +232,71 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Email", "Name", "PasswordHash", "RefreshToken", "Role", "Surname", "TeachingLanguage" },
+                table: "Maps",
+                columns: new[] { "Id", "BackgroundTitle", "Description", "Name" },
+                values: new object[] { 1, "шлях", "опис світу", "TaleWorld" });
+
+            migrationBuilder.InsertData(
+                table: "TypeTasks",
+                columns: new[] { "Id", "Type" },
                 values: new object[,]
                 {
-                    { 1, "teacher@gmail.com", "Name1", "12345", null, 0, "Surname1", "English" },
-                    { 2, "student@gmail.com", "Name2", "123456", null, 1, "Surname2", null }
+                    { 1, 0 },
+                    { 2, 1 },
+                    { 3, 2 },
+                    { 4, 3 },
+                    { 5, 4 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Name", "PasswordHash", "Photo", "RefreshToken", "Role", "Surname", "TeachingLanguage" },
+                values: new object[,]
+                {
+                    { 1, "teacher@gmail.com", "Name1", "12345", null, null, 0, "Surname1", "English" },
+                    { 2, "student@gmail.com", "Name2", "123456", null, null, 1, "Surname2", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TaskSubType",
+                columns: new[] { "Id", "SubType", "TypeId" },
+                values: new object[,]
+                {
+                    { 1, "Fill in the blanks", 1 },
+                    { 2, "Multiple choice", 1 },
+                    { 3, "Sentence building", 1 },
+                    { 4, "Error correction", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "courses",
+                columns: new[] { "Id", "CoursePhoto", "TeacherId", "Title" },
+                values: new object[] { 1, null, 1, "Подорожі" });
+
+            migrationBuilder.InsertData(
+                table: "Lessons",
+                columns: new[] { "Id", "CourseId", "MapId", "Title" },
+                values: new object[] { 1, 1, 1, "" });
+
+            migrationBuilder.InsertData(
+                table: "TasksQuestions",
+                columns: new[] { "Id", "Question", "SubTypeId", "TypeId" },
+                values: new object[] { 1, "Choose the correct form: He ___ to the gym every day.", 2, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Background", "MapId", "TaskQuestionsId", "Text" },
+                values: new object[] { 1, "new", 1, 1, "text" });
+
+            migrationBuilder.InsertData(
+                table: "TaskOptions",
+                columns: new[] { "Id", "IsCorrect", "OptionText", "TaskQuestionsId" },
+                values: new object[,]
+                {
+                    { 1, true, "going", 1 },
+                    { 2, false, "goes", 1 },
+                    { 3, false, "gone", 1 },
+                    { 4, false, "go", 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -214,6 +313,26 @@ namespace Infrastructure.Migrations
                 name: "IX_Lessons_MapId",
                 table: "Lessons",
                 column: "MapId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_MapId",
+                table: "Locations",
+                column: "MapId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_TaskQuestionsId",
+                table: "Locations",
+                column: "TaskQuestionsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCourses_CourseId",
+                table: "StudentCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCourses_StudentId",
+                table: "StudentCourses",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TaskOptions_TaskQuestionsId",
@@ -244,6 +363,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "StudentCourses");
 
             migrationBuilder.DropTable(
                 name: "TaskOptions");

@@ -93,9 +93,9 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BackgroundTitle = "шлях",
-                            Description = "опис світу",
-                            Name = "TaleWorld"
+                            BackgroundTitle = "/public/images/Map1.jpg",
+                            Description = "d",
+                            Name = "Map1"
                         });
                 });
 

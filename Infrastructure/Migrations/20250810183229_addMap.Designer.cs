@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    [Migration("20250518212219_Photo")]
-    partial class Photo
+    [Migration("20250810183229_addMap")]
+    partial class addMap
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,9 +96,9 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BackgroundTitle = "шлях",
-                            Description = "опис світу",
-                            Name = "TaleWorld"
+                            BackgroundTitle = "/public/images/Map1.jpg",
+                            Description = "d",
+                            Name = "Map1"
                         });
                 });
 
