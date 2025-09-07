@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    [Migration("20250804120219_new")]
+    [Migration("20250823195104_new")]
     partial class @new
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("MapId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TaskQuestionsId")
+                    b.Property<int?>("TaskQuestionsId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Text")
@@ -60,9 +60,8 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Background = "new",
+                            Background = "/images/Location3.jpg",
                             MapId = 1,
-                            TaskQuestionsId = 1,
                             Text = "text"
                         });
                 });
@@ -96,9 +95,9 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BackgroundTitle = "шлях",
-                            Description = "опис світу",
-                            Name = "TaleWorld"
+                            BackgroundTitle = "/images/Map1.jpg",
+                            Description = "d",
+                            Name = "Map1"
                         });
                 });
 
@@ -113,6 +112,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CoursePhoto")
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<int>("TeacherId")
                         .HasColumnType("integer");
 
@@ -125,7 +127,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("courses");
+                    b.ToTable("Courses");
 
                     b.HasData(
                         new
@@ -459,9 +461,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
                         .WithMany("Locations")
-                        .HasForeignKey("TaskQuestionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TaskQuestionsId");
 
                     b.Navigation("Map");
 

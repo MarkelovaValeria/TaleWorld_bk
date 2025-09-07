@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
 
         public async Task<User> GetTeacherByCourseIdAsync(int courseId)
         {
-            var course = await _context.courses
+            var course = await _context.Courses
                 .AsNoTracking()
                 .FirstOrDefaultAsync(course => course.Id == courseId);
 

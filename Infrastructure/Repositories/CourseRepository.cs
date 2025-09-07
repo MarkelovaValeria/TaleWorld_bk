@@ -21,30 +21,30 @@ namespace Infrastructure.Repositories
 
         public async Task AddCourse(Course course)
         {
-            await _context.courses.AddAsync(course);
+            await _context.Courses.AddAsync(course);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<Course>> GetAllCoursesAsync()
         {
-            return await _context.courses.ToListAsync();
+            return await _context.Courses.ToListAsync();
         }
 
         public async Task<Course> GetCourseByIdAsync(int courseId)
         {
-            return await _context.courses
+            return await _context.Courses
                 .FirstOrDefaultAsync(c => c.Id == courseId);
         }
 
         public async Task<Course> GetCourseByTeacherIdAsync(int teacherId)
         {
-            return await _context.courses
+            return await _context.Courses
                 .FirstOrDefaultAsync(ct => ct.TeacherId == teacherId);
         }
 
         public async Task<Course> GetCourseByTitleAsync(string title)
         {
-            return await _context.courses
+            return await _context.Courses
                 .FirstOrDefaultAsync(t => t.Title == title);
         }
 

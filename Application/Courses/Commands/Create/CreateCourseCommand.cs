@@ -11,6 +11,7 @@ namespace Application.Courses.Commands.Create
     {
         public string Title { get; set; }
         public int TeacherId { get; set; }
+        public string? Description { get; set; }
         public string? Photo { get; set; }
     }
 }

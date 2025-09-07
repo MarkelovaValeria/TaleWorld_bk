@@ -82,20 +82,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "courses",
+                name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     TeacherId = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     CoursePhoto = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_courses", x => x.Id);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_courses_Users_TeacherId",
+                        name: "FK_Courses_Users_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -143,15 +144,15 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Lessons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lessons_Maps_MapId",
-                        column: x => x.MapId,
-                        principalTable: "Maps",
+                        name: "FK_Lessons_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Lessons_courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "courses",
+                        name: "FK_Lessons_Maps_MapId",
+                        column: x => x.MapId,
+                        principalTable: "Maps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -169,15 +170,15 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_StudentCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentCourses_Users_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Users",
+                        name: "FK_StudentCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StudentCourses_courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "courses",
+                        name: "FK_StudentCourses_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -191,7 +192,7 @@ namespace Infrastructure.Migrations
                     Background = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     Text = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
                     MapId = table.Column<int>(type: "integer", nullable: false),
-                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false)
+                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -206,8 +207,7 @@ namespace Infrastructure.Migrations
                         name: "FK_Locations_TasksQuestions_TaskQuestionsId",
                         column: x => x.TaskQuestionsId,
                         principalTable: "TasksQuestions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -234,7 +234,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Maps",
                 columns: new[] { "Id", "BackgroundTitle", "Description", "Name" },
-                values: new object[] { 1, "шлях", "опис світу", "TaleWorld" });
+                values: new object[] { 1, "/images/Map1.jpg", "d", "Map1" });
 
             migrationBuilder.InsertData(
                 table: "TypeTasks",
@@ -258,6 +258,16 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id", "CoursePhoto", "Description", "TeacherId", "Title" },
+                values: new object[] { 1, null, null, 1, "Подорожі" });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Background", "MapId", "TaskQuestionsId", "Text" },
+                values: new object[] { 1, "/images/Location3.jpg", 1, null, "text" });
+
+            migrationBuilder.InsertData(
                 table: "TaskSubType",
                 columns: new[] { "Id", "SubType", "TypeId" },
                 values: new object[,]
@@ -269,11 +279,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "courses",
-                columns: new[] { "Id", "CoursePhoto", "TeacherId", "Title" },
-                values: new object[] { 1, null, 1, "Подорожі" });
-
-            migrationBuilder.InsertData(
                 table: "Lessons",
                 columns: new[] { "Id", "CourseId", "MapId", "Title" },
                 values: new object[] { 1, 1, 1, "" });
@@ -282,11 +287,6 @@ namespace Infrastructure.Migrations
                 table: "TasksQuestions",
                 columns: new[] { "Id", "Question", "SubTypeId", "TypeId" },
                 values: new object[] { 1, "Choose the correct form: He ___ to the gym every day.", 2, 1 });
-
-            migrationBuilder.InsertData(
-                table: "Locations",
-                columns: new[] { "Id", "Background", "MapId", "TaskQuestionsId", "Text" },
-                values: new object[] { 1, "new", 1, 1, "text" });
 
             migrationBuilder.InsertData(
                 table: "TaskOptions",
@@ -300,8 +300,8 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_courses_TeacherId",
-                table: "courses",
+                name: "IX_Courses_TeacherId",
+                table: "Courses",
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
@@ -374,7 +374,7 @@ namespace Infrastructure.Migrations
                 name: "Maps");
 
             migrationBuilder.DropTable(
-                name: "courses");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "TasksQuestions");

@@ -12,6 +12,6 @@ namespace Application.Locations.Commands.Create
         public string Background { get; set; }
         public string Text { get; set; }
         public int MapId { get; set; }
-        public int TaskQuestionsId { get; set; }
+        public int? TaskQuestionsId { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace Application.Courses.Commands.Create
                 Title = request.Title,
                 TeacherId = request.TeacherId,
                 CoursePhoto = request.Photo,
+                Description =  request.Description,
             };
             await _course.AddCourse(courses);
             return true;

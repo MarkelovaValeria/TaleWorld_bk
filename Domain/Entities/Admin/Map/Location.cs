@@ -13,7 +13,7 @@ namespace Domain.Entities.Admin.Map
         public string Text { get; set; }
         public int MapId  { get; set; }
         public Map Map { get; set; }
-        public int TaskQuestionsId { get; set; }
+        public int? TaskQuestionsId { get; set; }
         public TasksQuestions TaskQuestions { get; set; }
 
 

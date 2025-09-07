@@ -18,8 +18,8 @@ namespace Persistance.Seeding
             {
                 Id = 1,
                 MapId = 1,
-                TaskQuestionsId = 1,
-                Background = "new",
+                TaskQuestionsId = null,
+                Background = "/images/Location3.jpg",
                 Text = "text"
             }
         };

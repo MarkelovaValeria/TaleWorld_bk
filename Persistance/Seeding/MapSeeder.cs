@@ -17,7 +17,7 @@ namespace Persistance.Seeding
             new Map
             {
                 Id = 1,
-                BackgroundTitle = "/public/images/Map1.jpg",
+                BackgroundTitle = "/images/Map1.jpg",
                 Description = "d",
                 Name = "Map1",
             }

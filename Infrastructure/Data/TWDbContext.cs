@@ -39,7 +39,7 @@ namespace Infrastructure.Data
         public DbSet<TasksQuestions> TasksQuestions { get; set; }
         public DbSet<TaskOptions> TaskOptions { get; set; }
         public DbSet<Lessons> Lessons { get; set; }
-        public DbSet<Course> courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Map> Maps { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
