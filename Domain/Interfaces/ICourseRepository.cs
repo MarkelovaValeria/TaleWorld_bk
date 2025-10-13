@@ -15,5 +15,7 @@ namespace Domain.Interfaces
         Task<Course> GetCourseByIdAsync(int courseId);
         Task<Course> GetCourseByTitleAsync(string title);
         Task<Course> GetCourseByTeacherIdAsync(int teacherId);
+
+        Task<IEnumerable<Course>> GetCoursesByTeacherIdAsync(int teacherId);
     }
 }

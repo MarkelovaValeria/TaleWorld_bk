@@ -1,5 +1,6 @@
 ﻿using Application.Auth.Queries.GetUserByFullName;
 using Application.Courses.Commands.Create;
+using Application.Courses.Queries.GetAllCoursesByUserId;
 using Application.Courses.Queries.GetCoursesById;
 using Application.Courses.Queries.GetCoursesByUserId;
 using Application.Courses.Queries.QetAllCourses;
@@ -47,6 +48,18 @@ namespace TaleWorld_bk.Controllers
                 return NotFound();
 
             return Ok(course);
+        }
+
+        [HttpGet("byUserGetAllCourses")]
+        public async Task<IActionResult> GetCoursesByUserId([FromQuery] int teacherId)
+        {
+            var query = new GetAllCoursesByUserIdQuery(teacherId);
+            var courses = await _mediator.Send(query);
+
+            if (courses == null || !courses.Any())
+                return Ok(new { message = "У цього викладача ще немає курсів.", courses = new List<object>() });
+
+            return Ok(courses);
         }
 
     }
