@@ -48,5 +48,12 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(t => t.Title == title);
         }
 
+        public async Task<IEnumerable<Course>> GetCoursesByTeacherIdAsync(int teacherId)
+        {
+            return await _context.Courses
+                .Where(c => c.TeacherId == teacherId)
+                .ToListAsync();
+        }
+
     }
 }
