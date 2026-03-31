@@ -31,6 +31,7 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
             modelBuilder.ApplyConfiguration(new LessonsConfiguration());
             modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new LessonTaskConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
@@ -40,9 +41,10 @@ namespace Infrastructure.Data
         public DbSet<TaskOptions> TaskOptions { get; set; }
         public DbSet<Lessons> Lessons { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Map> Maps { get; set; }
+        public DbSet<LocationTemplate> Locations { get; set; }
+        public DbSet<MapTemplate> Maps { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<LessonTask> LessonTasks { get; set; }
         /* public virtual DbSet<User> Users { get; set; }
          public virtual DbSet<TypeTasks> TypeTasks { get; set; }
          public virtual DbSet<TaskSubType> TaskSubType { get; set; }

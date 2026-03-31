@@ -11,10 +11,14 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int CourseId { get; set; }
-        public int MapId { get; set; }
+        public string? Description { get; set; }
 
+        public int CourseId { get; set; }
         public Course Course { get; set; }
-        public Map Map { get; set; }
+
+        public int? TemplateId { get; set; }
+        public LocationTemplate? Template { get; set; }
+
+        public List<LessonTask> LessonTasks { get; set; } = new();
     }
 }

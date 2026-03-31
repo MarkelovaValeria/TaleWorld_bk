@@ -10,20 +10,19 @@ using System.Threading.Tasks;
 
 namespace Persistance.Seeding
 {
-    public class LocationSeeder : ISeeder<Location>
+    public class LocationSeeder : ISeeder<LocationTemplate>
     {
-        private static readonly List<Location> locations = new()
+        private static readonly List<LocationTemplate> locations = new()
         {
-            new Location
+            new LocationTemplate
             {
                 Id = 1,
-                MapId = 1,
-                TaskQuestionsId = null,
+                MapTemplateId = 1,
                 Background = "/images/Location3.jpg",
                 Text = "text"
             }
         };
 
-        public void Seed(EntityTypeBuilder<Location> builder) => builder.HasData(locations);
+        public void Seed(EntityTypeBuilder<LocationTemplate> builder) => builder.HasData(locations);
     }
 }

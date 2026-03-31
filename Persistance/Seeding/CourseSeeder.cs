@@ -15,8 +15,9 @@ namespace Persistance.Seeding
             new Course
             {
                 Id = 1,
-                TeacherId = 1,
-                Title = "Подорожі"
+                CreatedById = 1,
+                Title = "Подорожі",
+                TemplateId = 1
             }
         };
 

@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(course => course.Id == courseId);
 
-            return await _context.Users.FirstOrDefaultAsync(user => user.Id == course.TeacherId);
+            return await _context.Users.FirstOrDefaultAsync(user => user.Id == course.CreatedById);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

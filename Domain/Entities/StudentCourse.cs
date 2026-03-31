@@ -9,7 +9,6 @@ namespace Domain.Entities
     public class StudentCourse
     {
         public int Id { get; set; }
-
         public int StudentId { get; set; }
         public User Student { get; set; }
 

@@ -9,10 +9,10 @@ namespace Domain.Entities
     public class TaskOptions
     {
         public int Id { get; set; }
-        public int TaskQuestionsId { get; set; }
         public string OptionText { get; set; }
         public bool IsCorrect { get; set; }
 
+        public int TaskQuestionsId { get; set; }
         public TasksQuestions TaskQuestions { get; set; }
     }
 }

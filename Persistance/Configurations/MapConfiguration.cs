@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Persistance.Configurations
 {
-    public class MapConfiguration : IEntityTypeConfiguration<Map>
+    public class MapConfiguration : IEntityTypeConfiguration<MapTemplate>
     {
-        public void Configure(EntityTypeBuilder<Map> builder)
+        public void Configure(EntityTypeBuilder<MapTemplate> builder)
         {
             builder.HasKey(map => map.Id);
 

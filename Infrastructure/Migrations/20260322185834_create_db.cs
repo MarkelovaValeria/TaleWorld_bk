@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class @new : Migration
+    public partial class create_db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,13 +62,34 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Background = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    Text = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
+                    MapTemplateId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_Maps_MapTemplateId",
+                        column: x => x.MapTemplateId,
+                        principalTable: "Maps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TaskSubType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TypeId = table.Column<int>(type: "integer", nullable: false),
-                    SubType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    SubType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    TypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,16 +109,22 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    TeacherId = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    CoursePhoto = table.Column<string>(type: "text", nullable: true)
+                    Image = table.Column<string>(type: "text", nullable: true),
+                    CreatedById = table.Column<int>(type: "integer", nullable: false),
+                    TemplateId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Users_TeacherId",
-                        column: x => x.TeacherId,
+                        name: "FK_Courses_Maps_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Maps",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Courses_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -109,9 +136,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Question = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     SubTypeId = table.Column<int>(type: "integer", nullable: false),
-                    TypeId = table.Column<int>(type: "integer", nullable: false),
-                    Question = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    TypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,8 +164,9 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     CourseId = table.Column<int>(type: "integer", maxLength: 50, nullable: false),
-                    MapId = table.Column<int>(type: "integer", nullable: false)
+                    TemplateId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,9 +178,9 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Lessons_Maps_MapId",
-                        column: x => x.MapId,
-                        principalTable: "Maps",
+                        name: "FK_Lessons_Locations_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -184,41 +212,14 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Background = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    Text = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
-                    MapId = table.Column<int>(type: "integer", nullable: false),
-                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Locations_Maps_MapId",
-                        column: x => x.MapId,
-                        principalTable: "Maps",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Locations_TasksQuestions_TaskQuestionsId",
-                        column: x => x.TaskQuestionsId,
-                        principalTable: "TasksQuestions",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TaskOptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false),
                     OptionText = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false)
+                    IsCorrect = table.Column<bool>(type: "boolean", nullable: false),
+                    TaskQuestionsId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -226,6 +227,32 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_TaskOptions_TasksQuestions_TaskQuestionsId",
                         column: x => x.TaskQuestionsId,
+                        principalTable: "TasksQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LessonTasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    LessonId = table.Column<int>(type: "integer", nullable: false),
+                    TaskQuestionId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LessonTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonTasks_Lessons_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LessonTasks_TasksQuestions_TaskQuestionId",
+                        column: x => x.TaskQuestionId,
                         principalTable: "TasksQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -259,13 +286,13 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Courses",
-                columns: new[] { "Id", "CoursePhoto", "Description", "TeacherId", "Title" },
-                values: new object[] { 1, null, null, 1, "Подорожі" });
+                columns: new[] { "Id", "CreatedById", "Description", "Image", "TemplateId", "Title" },
+                values: new object[] { 1, 1, null, null, 1, "Подорожі" });
 
             migrationBuilder.InsertData(
                 table: "Locations",
-                columns: new[] { "Id", "Background", "MapId", "TaskQuestionsId", "Text" },
-                values: new object[] { 1, "/images/Location3.jpg", 1, null, "text" });
+                columns: new[] { "Id", "Background", "MapTemplateId", "Text" },
+                values: new object[] { 1, "/images/Location3.jpg", 1, "text" });
 
             migrationBuilder.InsertData(
                 table: "TaskSubType",
@@ -280,13 +307,18 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Lessons",
-                columns: new[] { "Id", "CourseId", "MapId", "Title" },
-                values: new object[] { 1, 1, 1, "" });
+                columns: new[] { "Id", "CourseId", "Description", "TemplateId", "Title" },
+                values: new object[] { 1, 1, null, 1, "" });
 
             migrationBuilder.InsertData(
                 table: "TasksQuestions",
                 columns: new[] { "Id", "Question", "SubTypeId", "TypeId" },
                 values: new object[] { 1, "Choose the correct form: He ___ to the gym every day.", 2, 1 });
+
+            migrationBuilder.InsertData(
+                table: "LessonTasks",
+                columns: new[] { "Id", "LessonId", "TaskQuestionId" },
+                values: new object[] { 1, 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "TaskOptions",
@@ -300,9 +332,14 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TeacherId",
+                name: "IX_Courses_CreatedById",
                 table: "Courses",
-                column: "TeacherId");
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_TemplateId",
+                table: "Courses",
+                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_CourseId",
@@ -310,19 +347,24 @@ namespace Infrastructure.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lessons_MapId",
+                name: "IX_Lessons_TemplateId",
                 table: "Lessons",
-                column: "MapId");
+                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_MapId",
-                table: "Locations",
-                column: "MapId");
+                name: "IX_LessonTasks_LessonId",
+                table: "LessonTasks",
+                column: "LessonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_TaskQuestionsId",
+                name: "IX_LessonTasks_TaskQuestionId",
+                table: "LessonTasks",
+                column: "TaskQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_MapTemplateId",
                 table: "Locations",
-                column: "TaskQuestionsId");
+                column: "MapTemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentCourses_CourseId",
@@ -359,10 +401,7 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Lessons");
-
-            migrationBuilder.DropTable(
-                name: "Locations");
+                name: "LessonTasks");
 
             migrationBuilder.DropTable(
                 name: "StudentCourses");
@@ -371,19 +410,25 @@ namespace Infrastructure.Migrations
                 name: "TaskOptions");
 
             migrationBuilder.DropTable(
-                name: "Maps");
-
-            migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "TasksQuestions");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "TaskSubType");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Maps");
 
             migrationBuilder.DropTable(
                 name: "TypeTasks");

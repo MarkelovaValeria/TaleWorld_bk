@@ -20,12 +20,11 @@ namespace Application.Locations.Commands.Create
 
         public async Task<bool> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {
-            var locations = new Location
+            var locations = new LocationTemplate
             {
                 Background = request.Background,
                 Text = request.Text,
-                MapId = request.MapId,
-                TaskQuestionsId = request.TaskQuestionsId,
+                MapTemplateId = request.MapId,
             };
 
             await _location.AddLocation(locations);

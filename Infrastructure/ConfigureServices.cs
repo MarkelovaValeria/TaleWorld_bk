@@ -32,6 +32,7 @@ namespace Infrastructure
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ILessonRepository, LessonRepository>();
             services.AddTransient<ILocationRepository, LocationRepository>();
+            services.AddTransient<ILessonTaskRepository, LessonTaskRepository>();
 
             return services;
         }

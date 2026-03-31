@@ -23,8 +23,8 @@ namespace Application.Courses.Commands.Create
             var courses = new Domain.Entities.Course
             {
                 Title = request.Title,
-                TeacherId = request.TeacherId,
-                CoursePhoto = request.Photo,
+                CreatedById = request.TeacherId,
+                Image = request.Photo,
                 Description =  request.Description,
             };
             await _course.AddCourse(courses);

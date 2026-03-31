@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Maps.Queries.GetAllMaps
 {
-    public class GetAllMapsQuery : IRequest<List<Map>>
+    public class GetAllMapsQuery : IRequest<List<MapTemplate>>
     {
         public GetAllMapsQuery() { }
     }

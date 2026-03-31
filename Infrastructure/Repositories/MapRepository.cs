@@ -20,18 +20,18 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task AddMap(Map map)
+        public async Task AddMap(MapTemplate map)
         {
             await _context.Maps.AddAsync(map);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Map>> GetAllMaps()
+        public async Task<List<MapTemplate>> GetAllMaps()
         {
             return await _context.Maps.ToListAsync();
         }
 
-        public async Task<Map> GetMapById(int mapId)
+        public async Task<MapTemplate> GetMapById(int mapId)
         {
             return await _context.Maps.FirstOrDefaultAsync(map => map.Id == mapId);
         }

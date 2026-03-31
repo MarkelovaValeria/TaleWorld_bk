@@ -17,7 +17,7 @@ namespace Persistance.Configurations
             builder.HasKey(lesson => lesson.Id);
             builder.Property(lesson => lesson.Title).IsRequired().HasMaxLength(50);
             builder.Property(lesson => lesson.CourseId).IsRequired().HasMaxLength(50);
-            builder.Property(lesson => lesson.MapId).IsRequired();
+            builder.Property(lesson => lesson.TemplateId).IsRequired();
 
             new LessonSeeder().Seed(builder);
         }

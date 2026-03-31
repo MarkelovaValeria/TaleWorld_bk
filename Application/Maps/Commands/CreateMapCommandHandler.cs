@@ -22,7 +22,7 @@ namespace Application.Maps.Commands
 
         public async Task<bool> Handle(CreateMapCommand request, CancellationToken cancellationToken)
         {
-            var maps = new Map
+            var maps = new MapTemplate
             {
                 Name = request.Name,
                 BackgroundTitle = request.BackgroundTitle,

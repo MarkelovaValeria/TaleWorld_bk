@@ -11,6 +11,6 @@ namespace Application.Lesson.Commands.Create
     {
         public string Title { get; set; }
         public int CourseId { get; set; }
-        public int MapId { get; set; }
+        public int LocationId { get; set; }
     }
 }

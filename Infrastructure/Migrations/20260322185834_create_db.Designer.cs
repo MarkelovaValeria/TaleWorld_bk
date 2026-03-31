@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TWDbContext))]
-    [Migration("20250823195104_new")]
-    partial class @new
+    [Migration("20260322185834_create_db")]
+    partial class create_db
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Location", b =>
+            modelBuilder.Entity("Domain.Entities.Admin.Map.LocationTemplate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,10 +37,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<int>("MapId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TaskQuestionsId")
+                    b.Property<int>("MapTemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Text")
@@ -50,9 +47,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MapId");
-
-                    b.HasIndex("TaskQuestionsId");
+                    b.HasIndex("MapTemplateId");
 
                     b.ToTable("Locations");
 
@@ -61,12 +56,12 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Background = "/images/Location3.jpg",
-                            MapId = 1,
+                            MapTemplateId = 1,
                             Text = "text"
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
+            modelBuilder.Entity("Domain.Entities.Admin.Map.MapTemplate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,13 +104,16 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CoursePhoto")
-                        .HasColumnType("text");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("TemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -125,7 +123,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("TemplateId");
 
                     b.ToTable("Courses");
 
@@ -133,8 +133,40 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            TeacherId = 1,
+                            CreatedById = 1,
+                            TemplateId = 1,
                             Title = "Подорожі"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.LessonTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TaskQuestionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("TaskQuestionId");
+
+                    b.ToTable("LessonTasks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LessonId = 1,
+                            TaskQuestionId = 1
                         });
                 });
 
@@ -150,7 +182,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("integer");
 
-                    b.Property<int>("MapId")
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TemplateId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -162,7 +197,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("MapId");
+                    b.HasIndex("TemplateId");
 
                     b.ToTable("Lessons");
 
@@ -171,7 +206,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CourseId = 1,
-                            MapId = 1,
+                            TemplateId = 1,
                             Title = ""
                         });
                 });
@@ -451,32 +486,51 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Location", b =>
+            modelBuilder.Entity("Domain.Entities.Admin.Map.LocationTemplate", b =>
                 {
-                    b.HasOne("Domain.Entities.Admin.Map.Map", "Map")
+                    b.HasOne("Domain.Entities.Admin.Map.MapTemplate", "MapTemplate")
                         .WithMany("Locations")
-                        .HasForeignKey("MapId")
+                        .HasForeignKey("MapTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestions")
-                        .WithMany("Locations")
-                        .HasForeignKey("TaskQuestionsId");
-
-                    b.Navigation("Map");
-
-                    b.Navigation("TaskQuestions");
+                    b.Navigation("MapTemplate");
                 });
 
             modelBuilder.Entity("Domain.Entities.Course", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "Teacher")
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherId")
+                    b.HasOne("Domain.Entities.User", "CreatedBy")
+                        .WithMany("TeachingCourses")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Teacher");
+                    b.HasOne("Domain.Entities.Admin.Map.MapTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LessonTask", b =>
+                {
+                    b.HasOne("Domain.Entities.Lessons", "Lesson")
+                        .WithMany("LessonTasks")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TasksQuestions", "TaskQuestion")
+                        .WithMany("LessonTasks")
+                        .HasForeignKey("TaskQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("TaskQuestion");
                 });
 
             modelBuilder.Entity("Domain.Entities.Lessons", b =>
@@ -487,15 +541,15 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Admin.Map.Map", "Map")
+                    b.HasOne("Domain.Entities.Admin.Map.LocationTemplate", "Template")
                         .WithMany()
-                        .HasForeignKey("MapId")
+                        .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
 
-                    b.Navigation("Map");
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("Domain.Entities.StudentCourse", b =>
@@ -507,7 +561,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "Student")
-                        .WithMany("StudentCourses")
+                        .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -542,7 +596,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
                     b.HasOne("Domain.Entities.TaskSubType", "SubType")
-                        .WithMany("TaskLocations")
+                        .WithMany("TaskQuestions")
                         .HasForeignKey("SubTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -558,7 +612,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Admin.Map.Map", b =>
+            modelBuilder.Entity("Domain.Entities.Admin.Map.MapTemplate", b =>
                 {
                     b.Navigation("Locations");
                 });
@@ -570,14 +624,19 @@ namespace Infrastructure.Migrations
                     b.Navigation("StudentCourses");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Lessons", b =>
+                {
+                    b.Navigation("LessonTasks");
+                });
+
             modelBuilder.Entity("Domain.Entities.TaskSubType", b =>
                 {
-                    b.Navigation("TaskLocations");
+                    b.Navigation("TaskQuestions");
                 });
 
             modelBuilder.Entity("Domain.Entities.TasksQuestions", b =>
                 {
-                    b.Navigation("Locations");
+                    b.Navigation("LessonTasks");
 
                     b.Navigation("TaskOptions");
                 });
@@ -589,9 +648,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Navigation("Courses");
+                    b.Navigation("Enrollments");
 
-                    b.Navigation("StudentCourses");
+                    b.Navigation("TeachingCourses");
                 });
 #pragma warning restore 612, 618
         }

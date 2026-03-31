@@ -10,13 +10,15 @@ namespace Domain.Entities
     public class TasksQuestions
     {
         public int Id { get; set; }
-        public int SubTypeId { get; set; }
-        public int TypeId { get; set; }
         public string Question { get; set; }
 
+        public int SubTypeId { get; set; }
         public TaskSubType SubType { get; set; }
+
+        public int TypeId { get; set; }
         public TypeTasks Type { get; set; }
+
         public List<TaskOptions> TaskOptions { get; set; } = new();
-        public List<Location> Locations { get; set; } = new();
+        public List<LessonTask> LessonTasks { get; set; } = new();
     }
 }

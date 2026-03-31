@@ -9,6 +9,7 @@ namespace Domain.Interfaces
 {
     public interface ILocationRepository
     {
-        Task AddLocation(Location location);
+        Task<LocationTemplate> GetById(int locationId);
+        Task AddLocation(LocationTemplate location);
     }
 }

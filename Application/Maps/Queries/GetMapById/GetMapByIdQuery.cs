@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Maps.Queries.GetMapById
 {
-    public class GetMapByIdQuery : IRequest<Map>
+    public class GetMapByIdQuery : IRequest<MapTemplate>
     {
         public int id { get; set; }
 

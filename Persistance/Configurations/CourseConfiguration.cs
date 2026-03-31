@@ -17,8 +17,8 @@ namespace Persistance.Configurations
             builder.HasKey(course => course.Id);
 
             builder.Property(course => course.Title).IsRequired().HasMaxLength(50);
-            builder.Property(course => course.TeacherId).IsRequired();
-            builder.Property(course => course.CoursePhoto).IsRequired(false);
+            builder.Property(course => course.CreatedById).IsRequired();
+            builder.Property(course => course.Image).IsRequired(false);
             builder.Property(course => course.Description).IsRequired(false);
 
             new CourseSeeder().Seed(builder);

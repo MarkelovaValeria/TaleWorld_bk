@@ -10,8 +10,8 @@ namespace Domain.Interfaces
 {
     public interface IMapRepository
     {
-        Task AddMap(Map map);
-        Task<List<Map>> GetAllMaps();
-        Task<Map> GetMapById(int mapId);
+        Task AddMap(MapTemplate map);
+        Task<List<MapTemplate>> GetAllMaps();
+        Task<MapTemplate> GetMapById(int mapId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Admin.Map;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,15 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task AddLocation(Location location)
+        public async Task AddLocation(LocationTemplate location)
         {
             await _context.Locations.AddAsync(location);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<LocationTemplate> GetById(int locationId)
+        {
+            return await _context.Locations.FirstOrDefaultAsync(location => location.Id == locationId);
         }
     }
 }

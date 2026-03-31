@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Entities.Admin.Map;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -13,21 +12,34 @@ namespace Application.Lesson.Commands.Create
     public class CreateLessonCommandHandler : IRequestHandler<CreateLessonCommand, bool>
     {
         private readonly ILessonRepository _lesson;
+        private readonly ILocationRepository _locationTemplate;
 
-        public CreateLessonCommandHandler(ILessonRepository lesson)
+        public CreateLessonCommandHandler(
+            ILessonRepository lesson,
+            ILocationRepository locationTemplate)
         {
             _lesson = lesson;
+            _locationTemplate = locationTemplate;
         }
 
         public async Task<bool> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
         {
-            var lessons = new Lessons 
+            var location = await _locationTemplate.GetById(request.LocationId);
+
+            if (location == null)
             {
-                Title = request.Title,
-                MapId = request.MapId,
+                throw new Exception("LocationTemplate не знайдено");
+            }
+
+            var lesson = new Lessons
+            {
+                Title = request.Title ?? location.Text,
+                Description = location.Text,
                 CourseId = request.CourseId,
+                TemplateId = location.Id
             };
-            await _lesson.AddLesson(lessons);
+
+            await _lesson.AddLesson(lesson);
             return true;
         }
     }

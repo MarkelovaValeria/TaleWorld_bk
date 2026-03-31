@@ -17,7 +17,7 @@ namespace Persistance.Configurations
 
             builder
                 .HasOne(sc => sc.Student)
-                .WithMany(u => u.StudentCourses)
+                .WithMany(u => u.Enrollments)
                 .HasForeignKey(sc => sc.StudentId)
                 .OnDelete(DeleteBehavior.Cascade);
 

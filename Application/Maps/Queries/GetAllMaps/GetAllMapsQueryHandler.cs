@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Maps.Queries.GetAllMaps
 {
-    public class GetAllMapsQueryHandler : IRequestHandler<GetAllMapsQuery, List<Map>>
+    public class GetAllMapsQueryHandler : IRequestHandler<GetAllMapsQuery, List<MapTemplate>>
     {
         private readonly IMapRepository _mapRepository;
 
@@ -18,7 +18,7 @@ namespace Application.Maps.Queries.GetAllMaps
             _mapRepository = mapRepository;
         }
 
-        public async Task<List<Map>> Handle(GetAllMapsQuery request, CancellationToken cancellationToken)
+        public async Task<List<MapTemplate>> Handle(GetAllMapsQuery request, CancellationToken cancellationToken)
         {
             
             return await _mapRepository.GetAllMaps();

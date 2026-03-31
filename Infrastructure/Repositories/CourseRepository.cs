@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
         public async Task<Course> GetCourseByTeacherIdAsync(int teacherId)
         {
             return await _context.Courses
-                .FirstOrDefaultAsync(ct => ct.TeacherId == teacherId);
+                .FirstOrDefaultAsync(ct => ct.CreatedById == teacherId);
         }
 
         public async Task<Course> GetCourseByTitleAsync(string title)

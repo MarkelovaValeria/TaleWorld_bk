@@ -9,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace Persistance.Seeding
 {
-    public class LessonSeeder : ISeeder<Lessons>
+    public class LessonTaskSeeder : ISeeder<LessonTask>
     {
-        private static readonly List<Lessons> lessons = new()
+        private static readonly List<LessonTask> lt = new()
         {
-            new Lessons
+            new LessonTask
             {
                 Id = 1,
-                CourseId = 1,
-                TemplateId = 1,
-                Title = ""
+                LessonId = 1,
+                TaskQuestionId = 1,
             }
         };
 
-        public void Seed(EntityTypeBuilder<Lessons> builder) => builder.HasData(lessons);
+        public void Seed(EntityTypeBuilder<LessonTask> builder) => builder.HasData(lt);
     }
 }

@@ -17,12 +17,11 @@ namespace Domain.Entities
         public string Email { get; set; }
         public UserRole Role { get; set; }
         public string? TeachingLanguage { get; set; }
-
         public string? Photo {  get; set; }
        
-        public List<Course> Courses { get; set; } = new();
+        public List<Course> TeachingCourses { get; set; } = new();
 
-        public List<StudentCourse> StudentCourses { get; set; } = new();
+        public List<StudentCourse> Enrollments { get; set; } = new();
 
         public void Validate()
         {

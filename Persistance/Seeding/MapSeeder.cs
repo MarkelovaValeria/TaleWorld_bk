@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Persistance.Seeding
 {
-    public class MapSeeder : ISeeder<Map>
+    public class MapSeeder : ISeeder<MapTemplate>
     {
-        private static readonly List<Map> maps = new()
+        private static readonly List<MapTemplate> maps = new()
         {
-            new Map
+            new MapTemplate
             {
                 Id = 1,
                 BackgroundTitle = "/images/Map1.jpg",
@@ -23,7 +23,7 @@ namespace Persistance.Seeding
             }
         };
 
-        public void Seed(EntityTypeBuilder<Map> builder) => builder.HasData(maps);
+        public void Seed(EntityTypeBuilder<MapTemplate> builder) => builder.HasData(maps);
 
     }
 }
