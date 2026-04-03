@@ -20,6 +20,7 @@ namespace Domain.Entities
         public string? Photo {  get; set; }
        
         public List<Course> TeachingCourses { get; set; } = new();
+        public List<TasksQuestions> Tasks { get; set; } = new();
 
         public List<StudentCourse> Enrollments { get; set; } = new();
 

@@ -19,6 +19,7 @@ namespace Persistance.Configurations
             builder.Property(task => task.TypeId).IsRequired();
             builder.Property(task => task.SubTypeId).IsRequired();
             builder.Property(task => task.Question).IsRequired().HasMaxLength(250);
+            builder.Property(task => task.CreatedById).IsRequired();
 
             new TasksQuestionsSeeder().Seed(builder);
         }

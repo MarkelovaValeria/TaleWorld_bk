@@ -10,6 +10,7 @@ namespace Domain.Interfaces
     public interface ILocationRepository
     {
         Task<LocationTemplate> GetById(int locationId);
+        Task<IEnumerable<LocationTemplate>> GetLocationsByMapIdAsync(int mapId);
         Task AddLocation(LocationTemplate location);
     }
 }

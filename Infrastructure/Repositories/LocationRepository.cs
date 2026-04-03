@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Admin.Map;
+﻿using Domain.Entities;
+using Domain.Entities.Admin.Map;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,15 @@ namespace Infrastructure.Repositories
         public async Task<LocationTemplate> GetById(int locationId)
         {
             return await _context.Locations.FirstOrDefaultAsync(location => location.Id == locationId);
+        }
+
+       
+
+        public async Task<IEnumerable<LocationTemplate>> GetLocationsByMapIdAsync(int mapId)
+        {
+            return await _context.Locations
+                .Where(lt => lt.MapTemplateId == mapId)
+                .ToListAsync();
         }
     }
 }

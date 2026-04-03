@@ -10,6 +10,8 @@ namespace Domain.Interfaces
 {
     public interface ILessonRepository
     {
+        Task<Lessons> GetLessonByIdAsync(int lessonId);
         Task AddLesson (Lessons lesson);
+        Task<IEnumerable<Lessons>> GetAllLessonsByCourseIdAsync(int courseId);
     }
 }

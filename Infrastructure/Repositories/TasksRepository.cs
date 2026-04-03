@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,17 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        
+
+        public async Task<TasksQuestions> GetTasksQuestionByTeacherIdAsync(int teacherId)
+        {
+            return await _context.TasksQuestions
+                .FirstOrDefaultAsync(ct => ct.CreatedById == teacherId);
+        }
+
+        public async Task<TaskOptions> GetAllTasksOptionsByQuestionsIdAsync(int questionsId)
+        {
+            return await _context.TaskOptions
+                .FirstOrDefaultAsync(ct => ct.TaskQuestionsId == questionsId);
+        }
     }
 }

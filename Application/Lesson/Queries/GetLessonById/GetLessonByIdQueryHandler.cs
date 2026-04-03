@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Courses.Queries.GetCoursesById
 {
-    public class GetLessonByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, Course?>
+    public class GetCourseByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, Course?>
     {
         private readonly ICourseRepository _courseRepository;
 
-        public GetLessonByIdQueryHandler(ICourseRepository courseRepository)
+        public GetCourseByIdQueryHandler(ICourseRepository courseRepository)
         {
             _courseRepository = courseRepository;
         }

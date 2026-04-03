@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<Course>> GetCoursesByTeacherIdAsync(int teacherId)
         {
             return await _context.Courses
-                .Where(c => c.TeacherId == teacherId)
+                .Where(c => c.CreatedById == teacherId)
                 .ToListAsync();
         }
 
