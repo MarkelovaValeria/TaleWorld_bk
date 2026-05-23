@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Lesson\Queries\" />
-    <Folder Include="Tasks\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

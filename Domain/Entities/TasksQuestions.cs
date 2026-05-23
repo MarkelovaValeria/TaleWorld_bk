@@ -18,6 +18,9 @@ namespace Domain.Entities
         public int TypeId { get; set; }
         public TypeTasks Type { get; set; }
 
+        public int CreatedById { get; set; }
+        public User CreatedBy { get; set; }
+
         public List<TaskOptions> TaskOptions { get; set; } = new();
         public List<LessonTask> LessonTasks { get; set; } = new();
     }

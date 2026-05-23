@@ -38,10 +38,16 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(ct => ct.CreatedById == teacherId);
         }
 
-        public async Task<TaskOptions> GetAllTasksOptionsByQuestionsIdAsync(int questionsId)
+        Task<IEnumerable<TasksQuestions>> ITasksRepository.GetTasksQuestionByTeacherIdAsync(int teacherId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<TaskOptions>> GetAllTasksOptionsByQuestionsIdAsync(int questionsId)
         {
             return await _context.TaskOptions
-                .FirstOrDefaultAsync(ct => ct.TaskQuestionsId == questionsId);
+                .Where(ct => ct.TaskQuestionsId == questionsId)
+                .ToListAsync();
         }
     }
 }

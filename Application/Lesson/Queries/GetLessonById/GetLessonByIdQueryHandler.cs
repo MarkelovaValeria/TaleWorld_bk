@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Courses.Queries.GetCoursesById
+namespace Application.Lesson.Queries.GetCoursesById
 {
-    public class GetCourseByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, Course?>
+    public class GetLessonByIdQueryHandler : IRequestHandler<GetLessonByIdQuery, Lessons?>
     {
-        private readonly ICourseRepository _courseRepository;
+        private readonly ILessonRepository _lessonRepository;
 
-        public GetCourseByIdQueryHandler(ICourseRepository courseRepository)
+        public GetLessonByIdQueryHandler(ILessonRepository lessonRepository)
         {
-            _courseRepository = courseRepository;
+            _lessonRepository = lessonRepository;
         }
 
-        public async Task<Course?> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Lessons?> Handle(GetLessonByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _courseRepository.GetCourseByIdAsync(request.Id);
+            return await _lessonRepository.GetLessonByIdAsync(request.Id);
         }
     }
 }

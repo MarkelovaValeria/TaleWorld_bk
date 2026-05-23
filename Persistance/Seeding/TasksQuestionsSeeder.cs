@@ -18,6 +18,7 @@ namespace Persistance.Seeding
                 Id = 1,
                 TypeId = 1,
                 SubTypeId = 2,
+                CreatedById = 1,
                 Question = "Choose the correct form: He ___ to the gym every day."
             }
         };

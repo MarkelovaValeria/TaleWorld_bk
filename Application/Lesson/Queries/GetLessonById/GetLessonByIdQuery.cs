@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Courses.Queries.GetCoursesById
+namespace Application.Lesson.Queries.GetCoursesById
 {
-    public class GetCourseByIdQuery : IRequest<Course?>
+    public class GetLessonByIdQuery : IRequest<Lessons?>
     {
         public int Id { get; set; }
 
-        public GetCourseByIdQuery(int id)
+        public GetLessonByIdQuery(int id)
         {
             Id = id;
         }
